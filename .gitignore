@@ -16,8 +16,10 @@ env/
 */.venv/
 
 #Ignore datasets
-.artifacts/
+artifacts/
+data/
 
+catboost_info/
 # Distribution / packaging
 .Python
 build/
