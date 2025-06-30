@@ -39,18 +39,17 @@ class DataTransformation:
 
             num_pipeline= Pipeline(
                 steps=[
-                ("imputer",SimpleImputer(strategy="median")),
-                ("scaler",StandardScaler())
-
+                ("imputer",SimpleImputer(strategy="median")),   #filling missing values with median
+                ("scaler",StandardScaler())                     #scaling the numerical columns
                 ]
             )
 
             cat_pipeline=Pipeline(
 
                 steps=[
-                ("imputer",SimpleImputer(strategy="most_frequent")),
+                ("imputer",SimpleImputer(strategy="most_frequent")),        #filling missing values with mode value
                 ("one_hot_encoder",OneHotEncoder()),
-                ("scaler",StandardScaler(with_mean=False))
+                ("scaler",StandardScaler(with_mean=False))                  #with_mean = False is used because OneHotEncoder returns a sparse matrix
                 ]
             )
 
@@ -94,9 +93,11 @@ class DataTransformation:
                 f"Applying preprocessing object on training dataframe and testing dataframe."
             )
 
+            #Applying transformations on train and test data
             input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)
 
+            # np.c_ is a NumPy function to concatenate arrays column-wise.
             train_arr = np.c_[
                 input_feature_train_arr, np.array(target_feature_train_df)
             ]

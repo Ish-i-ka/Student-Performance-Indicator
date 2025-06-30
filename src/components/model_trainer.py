@@ -10,7 +10,6 @@ from sklearn.ensemble import (
 )
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
-from sklearn.neighbors import KNeighborsRegressor
 from sklearn.tree import DecisionTreeRegressor
 from xgboost import XGBRegressor
 
@@ -45,6 +44,7 @@ class ModelTrainer:
                 "XGBRegressor": XGBRegressor(),
                 "CatBoosting Regressor": CatBoostRegressor(verbose=False),
                 "AdaBoost Regressor": AdaBoostRegressor(),
+              
             }
             # Hyperparameters for models
             params={
@@ -100,7 +100,8 @@ class ModelTrainer:
 
             if best_model_score<0.6:
                 raise CustomException("No best model found")
-            logging.info(f"Best found model on both training and testing dataset")
+            else:
+                logging.info(f"Best model found: {best_model_name} with score: {best_model_score}")
 
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
